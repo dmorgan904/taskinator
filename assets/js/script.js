@@ -104,6 +104,7 @@ var createTaskEl = function(taskDataObj) {
 
     taskDataObj.id = taskIdCounter;
     tasks.push(taskDataObj);
+    localStorage.setItem("tasks", tasks);
 
     // add entire list item to list
     tasksToDoEl.appendChild(listItemEl);  
@@ -111,8 +112,6 @@ var createTaskEl = function(taskDataObj) {
     //increase task counter for next unique id
     taskIdCounter++;
 
-    console.log(taskDataObj);
-    console.log(taskDataObj.status);
 };
 
 formEl.addEventListener("submit", taskFormHandler);
@@ -151,6 +150,7 @@ var deleteTask = function(taskId) {
 
    //reassign tasks array to be the same as updatedTaskArr
    tasks = updatedTaskArr;
+   localStorage.setItem ("tasks", tasks);
 };
 
 var editTask = function(taskId) {
@@ -180,6 +180,7 @@ var completeEditTask = function(taskName, taskType, taskId) {
             tasks[i].type = taskName;
         }
     };
+    localStorage.setItem("tasks", task);
     alert("Task Updated!"); 
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent = "Add Task";
@@ -210,9 +211,8 @@ var taskStatusChangeHandler = function(event) {
               tasks[i].status = statusValue;
           }
       }
-      console.log(tasks);
-
-};
+      localStorage.setItem("tasks", task);
+    };
 
 var dragTaskHandler = function(event) {
     var taskId = event.target.getAttribute("data-task-id");
@@ -254,7 +254,7 @@ var dropTaskHandler = function(event) {
               tasks[i].status = statusSelectEl.value.toLowerCase();
           }
       }
-      console.log(tasks);
+      localStorage.setItem("tasks", tasks);
     }
 
 var dragLeaveHandler = function(event) {
@@ -263,6 +263,11 @@ var dragLeaveHandler = function(event) {
         taskListEl.removeAttribute("style");
     }
 }
+
+var saveTasks = function() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
     pageContentEl.addEventListener("change", taskStatusChangeHandler)
     pageContentEl.addEventListener("dragstart", dragTaskHandler);
     pageContentEl.addEventListener("dragover", dropZoneDragHandler);
