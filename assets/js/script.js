@@ -278,7 +278,7 @@ var loadTasks = function() {
     // get task items from localStorage
     var savedTasks = localStorage.getItem("tasks");
     //convert tasks from string format back into an array of objects
-    if (savedTasks === null) {
+    if (!savedTasks) {
         return false;
       }
 
